@@ -1,0 +1,12 @@
+server:
+  port: ${serve.port:8080}
+
+spring:
+  application:
+    name: eacp-micro-service
+
+  devtools:
+    restart:
+      #热部署生效
+      enabled: true
+      exclude: WEB-INF/**

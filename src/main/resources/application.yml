@@ -1,0 +1,51 @@
+defaultDs:
+  string:
+    url: ${micro-service.datasource.url}
+    username: ${micro-service.datasource.username}
+    password: ${micro-service.datasource.password}
+    driverClassName: ${micro-service.datasource.driver}
+    connection-init-sqls: ${micro-service.datasource.connection}
+    validationQuery: ${micro-service.datasource.vaildQuery}
+    filters: stat
+  int:
+    initialSize: 20
+    minIdle: 20
+    maxActive: 50
+    maxPoolPreparedStatementPerConnectionSize: 20
+  long:
+    maxWait: 120000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+  boolean:
+    testWhileIdle: true
+    testOnBorrow: true
+    testOnReturn: false
+    poolPreparedStatements: true
+
+mybatis:
+  mapper-locations: classpath*:/mapper/**/*Mapper.xml
+
+eacp:
+  swagger:
+    enabled: true
+    title: EACP平台XXX微服务
+    description: EACP平台XXX微服务接口文档
+    version: 1.0
+    base-package: com.hanzhisoft.**.controller
+  cache-manager:
+    configs:
+      - key: micro-service
+        second: 300
+      - key: micro-service
+        second: 1800
+  #多租户配置
+  tenant:
+    enable: false
+    ignoreTables:
+
+
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: micro-service_tx_group
+  enable-auto-data-source-proxy: true
