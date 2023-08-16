@@ -1,51 +1,57 @@
+########################################### 默认数据源配置 ###########################################
 defaultDs:
   string:
-    url: ${micro-service.datasource.url}
-    username: ${micro-service.datasource.username}
-    password: ${micro-service.datasource.password}
-    driverClassName: ${micro-service.datasource.driver}
-    connection-init-sqls: ${micro-service.datasource.connection}
-    validationQuery: ${micro-service.datasource.vaildQuery}
-    filters: stat
+    url: ${datasource.url}
+    username: ${datasource.username}
+    password: ${datasource.password}
+    driverClassName: ${datasource.driverClassName}
+    connection-init-sqls: ${datasource.connectionInitSqls}
+    validationQuery: ${datasource.validationQuery:select 1}
+    filters: ${datasource.filters:stat}
   int:
-    initialSize: 20
-    minIdle: 20
-    maxActive: 50
-    maxPoolPreparedStatementPerConnectionSize: 20
+    initialSize: ${datasource.initialSize:20}
+    minIdle: ${datasource.minIdle:20}
+    maxActive: ${datasource.maxActive:50}
+    maxPoolPreparedStatementPerConnectionSize: ${datasource.maxPoolPreparedStatementPerConnectionSize:20}
   long:
-    maxWait: 120000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
+    maxWait: ${datasource.maxWait:120000}
+    timeBetweenEvictionRunsMillis: ${datasource.timeBetweenEvictionRunsMillis:60000}
+    minEvictableIdleTimeMillis: ${datasource.minEvictableIdleTimeMillis:300000}
   boolean:
-    testWhileIdle: true
-    testOnBorrow: true
-    testOnReturn: false
-    poolPreparedStatements: true
+    testWhileIdle: ${datasource.testWhileIdle:true}
+    testOnBorrow: ${datasource.testOnBorrow:true}
+    testOnReturn: ${datasource.testOnReturn:false}
+    poolPreparedStatements: ${datasource.poolPreparedStatements:true}
 
+
+########################################### 应用服务配置 #############################################
+
+################ mybatis 配置
 mybatis:
-  mapper-locations: classpath*:/mapper/**/*Mapper.xml
+  ## mybatis mapper 扫描路径
+  mapper-locations: ${mybatis.mapper-locations:classpath*:/mapper/**/*Mapper.xml}
 
+################ seata 配置
+seata:
+  enabled: ${seata.enabled:true}
+
+################ 基础功能配置
 eacp:
+  ## swagger 配置
   swagger:
-    enabled: true
-    title: EACP平台XXX微服务
-    description: EACP平台XXX微服务接口文档
-    version: 1.0
-    base-package: com.hanzhisoft.**.controller
+    enabled: ${swagger.enabled:true}
+    title: ${swagger.title:EACP平台XXX微服务}
+    description: ${swagger.description:EACP平台XXX微服务接口文档}
+    version: ${swagger.version:1.0}
+    base-package: ${swagger.base-package:com.hanzhisoft.**.controller}
+  ## 缓存管理配置
   cache-manager:
     configs:
-      - key: micro-service
+      - key: xxx1
         second: 300
-      - key: micro-service
+      - key: xxx2
         second: 1800
-  #多租户配置
+  ## 多租户配置(目前不适用)
   tenant:
-    enable: false
-    ignoreTables:
-
-
-seata:
-  enabled: true
-  application-id: ${spring.application.name}
-  tx-service-group: micro-service_tx_group
-  enable-auto-data-source-proxy: true
+    enable: ${tenant.enable:false}
+    ignoreTables: ${tenant.ignoreTables}
